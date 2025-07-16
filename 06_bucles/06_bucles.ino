@@ -24,6 +24,7 @@ for (int i = 100; i > 0; i--){
 */
 
 // Bucles en dos dimensiones
+/*
 String salida = "";
 
 for(int fila = 0; fila < 10; fila ++ ){
@@ -36,6 +37,30 @@ for(int fila = 0; fila < 10; fila ++ ){
 }
 
 Serial.print(salida);
+*/
+
+// Bucles infinitos
+int limite = 10;
+int contador = 0;
+for(;;){
+  if (contador == limite){
+    break;
+  }
+  Serial.print("Infinito: ");
+  Serial.println(contador);
+  contador ++;
+}
+
+// Bucles while
+contador = 0;
+while (contador < limite){
+  Serial.print("While: ");
+  Serial.println(contador);
+  contador ++;
+}
+
+
+
 }
 
 void loop() {
