@@ -15,7 +15,7 @@ float hum = 0.0;
 WiFiClient clienteWifi;
 HTTPClient http;
 
-char* servidor ="http://192.168.0.25:5000/datos";
+char* servidor ="http://192.168.0.64:5000/datos";
 
 // WIFI
 char* ssid = "Aula 1";
@@ -43,7 +43,7 @@ void loop() {
   temp = sensor.readTemperature();
   hum = sensor.readHumidity();
 
-  postData(temp,hum,"Teo");
+  postData(temp,hum,"Teo local");
   //Serial.println("Temp: " + String(temp));
   //Serial.println("Hum: " + String(hum));
 
@@ -52,6 +52,7 @@ void loop() {
 
 void postData(float t, float h, String per){
   String parametros = "temp=" + String(t) + "&hum=" + String(h) + "&persona=" + per;
+  Serial.println(parametros);
   int httpCode;
   String payload;
 
