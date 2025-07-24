@@ -81,9 +81,14 @@ void handle_Apagar(){
 void handle_Temp(){
   temp = dht.readTemperature();
   hum = dht.readHumidity();
+  /*
   temperatura.replace("##temp##", String(temp));
   temperatura.replace("##hum##", String(hum));
   servidor.send(200,"text/html",temperatura);
+  */
+  // {"nombre":"ESP32","temperatura":24.5,"activo":true,"sensores":["DHT22","MQ-2","BMP180"]}
+  String json = "{\"temp\":" + String(temp) + ",\"hum\":" + String(hum) + "}";
+  servidor.send(200,"text/json",json);
 }
 
 

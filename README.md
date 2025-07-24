@@ -1,16 +1,10 @@
 # curso\_arduino
 
-## Primera parte
+OTA: 
 
-### Segunda parte
+https://randomnerdtutorials.com/esp32-ota-elegantota-arduino/
 
-#### Tercera parte
-
-
-
-Esta es otra prueba
+https://lastminuteengineers.com/esp32-ota-web-updater-arduino-ide/
 
 
-
-Adiós Mundo cruel
 
