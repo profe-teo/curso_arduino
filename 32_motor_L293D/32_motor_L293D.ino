@@ -4,6 +4,13 @@
 #define DIRPIN_1 12
 #define DIRPIN_2 13
 
+//Estados posibles
+#define PARO 0
+#define DERECHA 1
+#define IZQUIERDA 2
+
+
+
 void setup() {
   Serial.begin(115200);
 
@@ -14,24 +21,49 @@ void setup() {
 }
 
 void loop() {
-  //digitalWrite(VELOCIDAD, HIGH); // Encendemos el motor
-  Serial.println("Girando en una dirección.");
-  analogWrite(VELOCIDAD, 70);
-  digitalWrite(DIRPIN_1, 0);
-  digitalWrite(DIRPIN_2, 1);
+  cambioEstado(DERECHA);
   delay(5000);
 
-  analogWrite(VELOCIDAD, 0); // Aapagamos el motor
+  cambioEstado(PARO);
   delay(2000);
 
-  //digitalWrite(VELOCIDAD, HIGH); // Encendemos el motor
-  Serial.println("Girando en ls otra dirección.");
-  analogWrite(VELOCIDAD, 250);
-  digitalWrite(DIRPIN_1, 1);
-  digitalWrite(DIRPIN_2, 0);
+  cambioEstado(IZQUIERDA);
   delay(5000);
 
-  Serial.println("Motor parado.");
-  analogWrite(VELOCIDAD, 0); // Aapagamos el motor
+  cambioEstado(PARO);
   delay(2000);
 }
+
+void cambioEstado(int estadoNuevo){
+  switch(estadoNuevo){
+    case PARO:
+      analogWrite(VELOCIDAD, 0); // Aapagamos el motor
+      break;
+    case IZQUIERDA:
+      //digitalWrite(VELOCIDAD, HIGH); // Encendemos el motor
+      Serial.println("Girando en la dirección IZQUIERDA.");
+      analogWrite(VELOCIDAD, 70);
+      digitalWrite(DIRPIN_1, 0);
+      digitalWrite(DIRPIN_2, 1);
+      break;
+    case DERECHA:
+      //digitalWrite(VELOCIDAD, HIGH); // Encendemos el motor
+      Serial.println("Girando en la dirección DERECHA.");
+      analogWrite(VELOCIDAD, 250);
+      digitalWrite(DIRPIN_1, 1);
+      digitalWrite(DIRPIN_2, 0);    
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
