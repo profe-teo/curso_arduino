@@ -1,5 +1,15 @@
 // https://descubrearduino.com/l293d/
 
+#include <LiquidCrystal_I2C.h>
+#include <Wire.h>
+
+#define SDA 18
+#define SCL 19
+#define ADDR 0x3F //0x27 // La otra es 0x3F
+
+LiquidCrystal_I2C lcd(ADDR,16,2);
+// ----------------------------------------
+
 #define VELOCIDAD 14
 #define DIRPIN_1 12
 #define DIRPIN_2 13
@@ -20,6 +30,11 @@
 
 void setup() {
   Serial.begin(115200);
+  Wire.begin(SDA,SCL);
+
+
+  lcd.init();
+  lcd.backlight();
 
   pinMode(VELOCIDAD, OUTPUT);
   pinMode(DIRPIN_1, OUTPUT);
@@ -48,9 +63,11 @@ void loop() {
 }
 
 void cambioEstado(int estadoNuevo){
+  lcd.clear();
   switch(estadoNuevo){
     case PARO:
       Serial.println("Motor parado.");
+      escribeLCD("Motor parado", 0);
       analogWrite(VELOCIDAD, 0); // Aapagamos el motor
       digitalWrite(ROJO,HIGH);
       digitalWrite(AZUL,LOW);
@@ -59,6 +76,8 @@ void cambioEstado(int estadoNuevo){
     case IZQUIERDA:
       //digitalWrite(VELOCIDAD, HIGH); // Encendemos el motor
       Serial.println("Girando en la dirección IZQUIERDA.");
+      escribeLCD("Giro IZQ.", 0);
+      escribeLCD("Velocidad: " + String(leerPot()), 1);
       analogWrite(VELOCIDAD, leerPot());
       digitalWrite(DIRPIN_1, 0);
       digitalWrite(DIRPIN_2, 1);
@@ -70,6 +89,8 @@ void cambioEstado(int estadoNuevo){
     case DERECHA:
       //digitalWrite(VELOCIDAD, HIGH); // Encendemos el motor
       Serial.println("Girando en la dirección DERECHA.");
+      escribeLCD("Giro DCHA.", 0);
+      escribeLCD("Velocidad: " + String(leerPot()), 1);
       analogWrite(VELOCIDAD, leerPot());
       digitalWrite(DIRPIN_1, 1);
       digitalWrite(DIRPIN_2, 0); 
@@ -95,7 +116,11 @@ int leerPot(){
 
 }
 
-
+void escribeLCD(String mensaje, int fila){
+  //lcd.clear();
+  lcd.setCursor(0,fila);
+  lcd.print(mensaje);
+}
 
 
 
