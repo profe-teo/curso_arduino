@@ -44,7 +44,7 @@ void loop() {
   }
   client.loop();
 
-  
+  /*
   now = millis();
   if(now - lastMsg > 10000){
     lastMsg = now;
@@ -52,6 +52,16 @@ void loop() {
     client.publish(mqtt_topic_pub, mensaje.c_str());
     Serial.println("Mensaje enviado: " + mensaje);
     
+  }
+  */
+ if (Serial.available() > 0) {
+    String mensaje = Serial.readStringUntil('\n');
+    mensaje.trim();  // Elimina espacios o saltos de línea
+    if (mensaje.length() > 0) {
+      client.publish(mqtt_topic_pub, mensaje.c_str());
+      Serial.print("Publicado: ");
+      Serial.println(mensaje);
+    }
   }
 
 }
@@ -82,3 +92,16 @@ void reconnect(){
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
