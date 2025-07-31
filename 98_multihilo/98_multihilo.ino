@@ -3,7 +3,7 @@
 // Pin del DHT22 y del ventilador
 #define DHTPIN 4
 #define DHTTYPE DHT22
-#define FAN_PIN 2
+#define FAN_PIN 12
 
 // Objeto DHT
 DHT dht(DHTPIN, DHTTYPE);
@@ -18,6 +18,7 @@ SemaphoreHandle_t tempMutex;
 void readTemperatureTask(void *pvParameters) {
   while (true) {
     float temp = dht.readTemperature();
+    Serial.println("Temp: " + String(temp));
     if (!isnan(temp)) {
       xSemaphoreTake(tempMutex, portMAX_DELAY);
       temperature = temp;
@@ -29,7 +30,7 @@ void readTemperatureTask(void *pvParameters) {
 
 // Tarea 2: Controla el ventilador
 void fanControlTask(void *pvParameters) {
-  const float threshold = 30.0;  // temperatura umbral
+  const float threshold = 26.0;  // temperatura umbral
 
   while (true) {
     xSemaphoreTake(tempMutex, portMAX_DELAY);

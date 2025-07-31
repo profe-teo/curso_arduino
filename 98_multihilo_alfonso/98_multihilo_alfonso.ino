@@ -1,7 +1,6 @@
-#include <Arduino.h>
-
 // Prueba Multitarea(Hilos)
 // https://docs.espressif.com/projects/esp-idf/en/v4.3/esp32/search.html?q=TaskHandle_t&check_keywords=yes&area=default
+
 TaskHandle_t Tarea0; // Tarea0 parpadeo LED 300 milisegundos
 TaskHandle_t Tarea1; // Tarea1 parpadeo LED 1 Segundo
 
@@ -23,7 +22,7 @@ void setup()
     xCoreID ........: The core ID to which the task is pinned (0 or 1 for ESP32).
   */
   xTaskCreatePinnedToCore(loop0, "Tarea_0", 1000, NULL, 1, &Tarea0, 0); // Core 0
-  xTaskCreatePinnedToCore(loop1, "Tarea_1", 1000, NULL, 1, &Tarea1, 1); // Core 0
+  xTaskCreatePinnedToCore(loop1, "Tarea_1", 1000, NULL, 1, &Tarea1, 1); // Core 1
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
 }
@@ -33,8 +32,10 @@ void loop0(void *parameter)
   while (true)
   {
     digitalWrite(13, HIGH);
+    Serial.println("Loop 0: Encendido");
     delay(300);
     digitalWrite(13, LOW);
+    Serial.println("Loop 0: Apagado");
     delay(300);
   }
 }
@@ -44,8 +45,10 @@ void loop1(void *parameter)
   while (true)
   {
     digitalWrite(12, HIGH);
+    Serial.println("Loop 1: Encendido");
     delay(1000);
     digitalWrite(12, LOW);
+    Serial.println("Loop 1: Apagado");
     delay(1000);
   }
 }
